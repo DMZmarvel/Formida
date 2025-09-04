@@ -1,58 +1,67 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import  { useState } from 'react';
-import { useAppDispatch } from '../../redux/hook';
-import { createUser, setLoading } from '../../redux/features/users/userSlice';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '../../utils/firebase';
+// src/shared/Social/Social.tsx
+import React from 'react';
+import axios from 'axios';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
-interface ICredential {
-  email: string | null;
-  // other properties
+
+const API_BASE =
+  import.meta.env.VITE_API_URL?.replace(/\/+$/, '') ||
+  'http://localhost:4040/api';
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || ''; // mirror your .env
+
+declare global {
+  interface Window {
+    google?: any;
+  }
 }
 
-const Social = () => {
-  const [errorMessage] = useState('');
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+export default function Social() {
+  const buttonRef = React.useRef<HTMLDivElement | null>(null);
 
-  const handleGoogleSignup = async () => {
+  const handleCredential = async (response: { credential: string }) => {
     try {
-      dispatch(setLoading(true));
-  
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-  
-      if (result.user && result.user.email !== null) {
-        const { email } = result.user;
-        dispatch(createUser({ email, password: '' }));
-        navigate('/');
-      }
-      
-  
-      dispatch(setLoading(false));
-      toast.success('Google signup successful!');
-    } catch (error) {
-      dispatch(setLoading(false));
-      toast.error('Error occurred during Google signup. Please try again.');
+      // Send Google ID token to your backend
+      const res = await axios.post(`${API_BASE}/auth/google`, {
+        idToken: response.credential,
+      });
+
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('role', res.data.user.role || 'user');
+      localStorage.setItem('userName', res.data.user.name);
+      localStorage.setItem('userEmail', res.data.user.email);
+
+      toast.success('Signed in with Google');
+      window.location.href = '/'; // or use navigate("/")
+    } catch (e) {
+      console.error(e);
+      toast.error('Google sign-in failed');
     }
   };
-  
+
+  React.useEffect(() => {
+    if (!window.google || !GOOGLE_CLIENT_ID) return;
+
+    window.google.accounts.id.initialize({
+      client_id: GOOGLE_CLIENT_ID,
+      callback: handleCredential,
+      auto_select: false,
+      ux_mode: 'popup',
+    });
+
+    if (buttonRef.current) {
+      window.google.accounts.id.renderButton(buttonRef.current, {
+        theme: 'outline',
+        size: 'large',
+        type: 'standard',
+        shape: 'pill',
+        text: 'signin_with',
+        logo_alignment: 'left',
+      });
+    }
+  }, []);
 
   return (
-    <>
-      <button
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        onClick={handleGoogleSignup}
-        className="mt-6 border rounded-md py-2 text-sm text-gray-800 bg-gray-100 hover:bg-gray-200 z-10"
-      >
-        <span>Sign In with Google</span>
-        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-      </button>
-    </>
+    <div className="mt-6">
+      <div ref={buttonRef} />
+    </div>
   );
-};
-
-export default Social;
+}
