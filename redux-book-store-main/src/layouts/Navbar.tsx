@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import bagsq from '../Images/BagsQ.png';
+import { FiMenu, FiX } from 'react-icons/fi';
 
 type NavItem = { to: string; label: string; auth?: 'any' | 'authed' | 'admin' };
 
@@ -23,6 +24,7 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Close menus & read auth on route change
   useEffect(() => {
     const token = localStorage.getItem('token');
     const r = (localStorage.getItem('role') as 'user' | 'admin' | null) || null;
@@ -30,9 +32,19 @@ export default function Navbar() {
     setIsAuthed(!!token);
     setRole(r);
     setUserName(name);
-    setAccountOpen(false); // close dropdown on route change
-    setMenuOpen(false); // close drawer on route change
+    setAccountOpen(false);
+    setMenuOpen(false);
   }, [location.pathname]);
+
+  // Allow ESC to close mobile drawer
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
 
   const initials = useMemo(() => {
     if (!userName) return 'U';
@@ -76,7 +88,11 @@ export default function Navbar() {
           <nav className="rounded-2xl bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70">
             <div className="flex items-center justify-between px-4 py-2.5">
               {/* Brand */}
-              <Link to="/" className="flex items-center gap-2">
+              <Link
+                to="/"
+                className="flex items-center gap-2"
+                aria-label="Public Notice – Home"
+              >
                 <img
                   src={bagsq}
                   alt="Public Notice logo"
@@ -129,6 +145,7 @@ export default function Navbar() {
                       className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-2.5 py-1.5 text-sm text-gray-800 hover:bg-gray-50"
                       aria-haspopup="menu"
                       aria-expanded={accountOpen}
+                      aria-controls="account-menu"
                     >
                       <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-gray-900 text-white text-xs font-semibold">
                         {initials}
@@ -136,10 +153,12 @@ export default function Navbar() {
                       <span className="hidden sm:inline text-gray-700 max-w-[140px] truncate">
                         {userName || 'Account'}
                       </span>
+                      <span className="sr-only">Toggle account menu</span>
                       <svg
                         className="h-4 w-4 text-gray-500"
                         viewBox="0 0 20 20"
                         fill="currentColor"
+                        aria-hidden="true"
                       >
                         <path
                           fillRule="evenodd"
@@ -151,6 +170,7 @@ export default function Navbar() {
 
                     {accountOpen && (
                       <div
+                        id="account-menu"
                         className="absolute right-0 mt-2 w-48 rounded-xl border border-gray-200 bg-white shadow-lg"
                         onMouseLeave={() => setAccountOpen(false)}
                         role="menu"
@@ -191,7 +211,7 @@ export default function Navbar() {
                 )}
               </div>
 
-              {/* Right side (mobile): inline small CTA + burger */}
+              {/* Right side (mobile): CTA + burger */}
               <div className="md:hidden flex items-center gap-2">
                 {!isAuthed ? (
                   <Link
@@ -205,28 +225,20 @@ export default function Navbar() {
                     {initials}
                   </span>
                 )}
+
+                {/* Burger button using react-icons */}
                 <button
                   onClick={() => setMenuOpen((v) => !v)}
-                  className="rounded-xl p-2 text-gray-700 hover:bg-gray-100"
+                  className="rounded-xl p-2 text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
                   aria-label="Toggle menu"
                   aria-controls="mobile-drawer"
                   aria-expanded={menuOpen}
                 >
-                  <svg
-                    className="h-6 w-6"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    {menuOpen ? (
-                      <path
-                        fillRule="evenodd"
-                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    ) : (
-                      <path d="M3 5h14M3 10h14M3 15h14" />
-                    )}
-                  </svg>
+                  {menuOpen ? (
+                    <FiX className="h-6 w-6" />
+                  ) : (
+                    <FiMenu className="h-6 w-6" />
+                  )}
                 </button>
               </div>
             </div>
@@ -236,14 +248,17 @@ export default function Navbar() {
               <>
                 {/* overlay */}
                 <div
-                  className="fixed inset-0 z-[60] bg-black/30"
+                  className="fixed inset-0 z-[999] bg-black/35 md:hidden"
                   onClick={() => setMenuOpen(false)}
+                  aria-hidden="true"
                 />
                 <div
                   id="mobile-drawer"
-                  className="fixed inset-x-0 top-0 z-[70] mt-[76px] /* height of header block */
-                             max-h-[calc(100vh-76px)] overflow-auto
-                             rounded-b-2xl border border-t-0 border-gray-200 bg-white shadow-xl md:hidden"
+                  className="fixed inset-x-0 top-0 z-[1000] md:hidden
+                             mt-[76px] max-h-[calc(100vh-76px)] overflow-auto
+                             rounded-b-2xl border border-t-0 border-gray-200 bg-white shadow-xl"
+                  role="dialog"
+                  aria-modal="true"
                 >
                   <div className="px-4 pb-4">
                     <ul className="flex flex-col py-2">
