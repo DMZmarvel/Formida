@@ -82,11 +82,11 @@ export default function Navbar() {
   const closeMenuAndGo = () => setMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-50">
-      <div className="mx-auto max-w-6xl px-3 pt-3 pb-3">
-        <div className="rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 p-[1px] shadow-md">
-          <nav className="rounded-2xl bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70">
-            <div className="flex items-center justify-between px-4 py-2.5">
+    <header className="sticky top-0 z-50 w-full">
+      <div className="w-full px-3 pt-3 pb-3">
+        <div className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 p-[1px] shadow-md rounded-none md:rounded-2xl">
+          <nav className="w-full bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 rounded-none md:rounded-2xl">
+            <div className="flex items-center justify-between px-4 py-2.5 w-full">
               {/* Brand */}
               <Link
                 to="/"

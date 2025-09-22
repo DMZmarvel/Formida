@@ -1,53 +1,51 @@
-.companies {
-  width: 100%;
+.client-logo {
+  width: 220px; /* 🔹 force uniform size */
+  height: 120px; /* 🔹 consistent height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.companies img {
-  cursor: text;
-  border: 0.1px solid rgb(213, 213, 213);
-  cursor: grab;
+.client-logo img {
+  max-width: 180px;
+  max-height: 80px;
+  object-fit: contain;
 }
-.companies img:hover {
-  box-shadow: 0px 10px 17px -2px rgba(99, 99, 99, 0.45);
-  transition: box-shadow 0.3s ease-in-out;
-}
-
+.client-logo:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px -4px rgba(0, 0, 0, 0.15);
+} /* Swiper adjustments */
 .swiper {
-  width: 80%;
-  padding: 15%;
-  margin: 20px;
-  height: 100%;
+  width: 85%;
+  padding: 30px 0;
 }
-
 .swiper-slide {
-  margin: 50px 0px;
-  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.swiper-button-prev::after {
-  margin-right: 25px;
-  transform: scale(0.6);
-  color: gray;
-}
-.swiper-button-next::after {
-  margin-left: 25px;
-  transform: scale(0.6);
-  color: gray;
+  gap: 2em;
 }
 .swiper-pagination-bullet {
   transform: scale(0.8);
-  color: gray;
+  background: gray;
 }
 
-@media screen and (min-width: 200px) {
-  .swiper-container {
-    width: 200px;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .swiper-container {
-    width: 768px;
+@media screen and (max-width: 500px) {
+  .client-logo {
+    width: 240px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto; /* ✅ centers the card inside swiper-slide */
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 }

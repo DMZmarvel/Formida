@@ -1,66 +1,55 @@
-
-import strength from "../../Images/strength.png";
-
-import "./Strength.css";
+import strength from '../../Images/strength.png';
+import './Strength.css';
 import { AiOutlineCheck } from 'react-icons/ai';
+
 const Strength = () => {
+  const items = [
+    'Streamlined Workflow',
+    'One-Click Customer Management',
+    'Automated Service Reminders',
+    'Efficient Customer Inspections',
+    'Technician Productivity Tracking',
+  ];
+
   return (
-    <div className="bg-white w-full block lg:flex justify-center items-center py-14">
-      <>
-        <div className=" w-full lg:w-1/3 px-2">
-          <img src={strength} alt="" />
+    <section className="bg-white w-full py-14">
+      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-10 px-6">
+        {/* Left side: image */}
+        <div
+          className="w-full lg:w-1/2 flex justify-center"
+          data-aos="fade-right"
+        >
+          <img
+            src={strength}
+            alt="Formida Strength"
+            className="max-w-md w-full object-contain"
+          />
         </div>
-      </>
-      <>
-        <div className="lg:w-[60ch] px-4">
-          <h2 className="font-[Nunito] text-4xl font-extrabold my-5 text-blue-900">
-            Our <span className="text-blue-500">Strength</span>
+
+        {/* Right side: text */}
+        <div className="w-full lg:w-1/2" data-aos="fade-up">
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-5 text-gray-900">
+            Our <span className="text-blue-600">Strength</span>
           </h2>
-          <p className="my-2">
-            Comprising a team of committed, visionary dedicated people based on
-            Sydney’s Northern Beaches,
-            <br />
+          <p className="text-gray-600 mb-6">
+            Backed by a dedicated and visionary team, Formida is built on
+            innovation and reliability to deliver seamless public notice
+            services.
           </p>
 
-          <br />
-
-          <div className="line-container flex items-center">
-            <div className="check-content">
-              <AiOutlineCheck  />
-            </div>
-            <p>Streamlined Workflow</p>
-          </div>
-
-          <div className="line-container flex items-center">
-            <div className="check-content">
-            <AiOutlineCheck  />
-            </div>
-            <p>‘One-Click’ Customer Management</p>
-          </div>
-
-          <div className="line-container flex items-center">
-            <div className="check-content">
-            <AiOutlineCheck  />
-            </div>
-            <p>Automated Service Reminders</p>
-          </div>
-
-          <div className="line-container flex items-center">
-            <div className="check-content">
-            <AiOutlineCheck  />
-            </div>
-            <p>Efficient Customer Inspections</p>
-          </div>
-
-          <div className="line-container flex items-center">
-            <div className="check-content">
-            <AiOutlineCheck  />
-            </div>
-            <p>Technician Productivity Tracking</p>
+          <div className="flex flex-col gap-4">
+            {items.map((text, i) => (
+              <div key={i} className="line-container flex items-center">
+                <div className="check-content">
+                  <AiOutlineCheck />
+                </div>
+                <p className="text-gray-800 font-medium">{text}</p>
+              </div>
+            ))}
           </div>
         </div>
-      </>
-    </div>
+      </div>
+    </section>
   );
 };
 

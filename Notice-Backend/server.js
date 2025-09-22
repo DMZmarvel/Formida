@@ -54,6 +54,7 @@ app.get("/health", (req, res) =>
 // Routes
 app.use("/api/auth", require("./routes/userRoutes"));
 app.use("/api/notices", require("./routes/noticeRoutes"));
+app.use("/api/stats", require("./routes/stats"));
 
 const PORT = process.env.PORT || 4040;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

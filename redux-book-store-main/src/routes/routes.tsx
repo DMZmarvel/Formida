@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Route } from 'react-router-dom';
 import App from '../App';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
@@ -17,6 +17,13 @@ import Dashboard from '@/pages/Dashboard';
 import PreviewNotice from '@/pages/PreviewNotice';
 import PayNotice from '@/pages/PayNotice';
 import Publications from '@/pages/Publications';
+
+import PrivacyPolicy from '../pages/PrivacyPolicy';
+import TermsConditions from '../pages/TermsConditions';
+import FAQ from '../pages/FAQ';
+import SupportCenter from '../pages/SupportCenter';
+import ContactUs from '../pages/ContactUs';
+
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 const routes = createBrowserRouter([
   {
@@ -51,6 +58,26 @@ const routes = createBrowserRouter([
             <EditBook />
           </PrivateRoute>
         ),
+      },
+      {
+        path: '/privacy-policy',
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: '/terms-conditions',
+        element: <TermsConditions />,
+      },
+      {
+        path: '/faq',
+        element: <FAQ />,
+      },
+      {
+        path: '/support',
+        element: <SupportCenter />,
+      },
+      {
+        path: '/contact',
+        element: <ContactUs />,
       },
       {
         path: '/checkout',
