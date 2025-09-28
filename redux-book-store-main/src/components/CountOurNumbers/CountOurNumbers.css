@@ -34,7 +34,6 @@
   background-color: #00b3ff;
 }
 
-/* responsive for mobile phone */
 @media screen and (max-width: 640px) {
   .count-banner {
     min-height: 70vh;
