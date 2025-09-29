@@ -1,5 +1,5 @@
 import benefits from '../../Images/benefits.png';
-import './benefits.css'; // 👈 make sure this import is active
+import './Benefits.css'; // 👈 make sure this import is active
 import {
   AiOutlineInbox,
   AiOutlineDollarCircle,
