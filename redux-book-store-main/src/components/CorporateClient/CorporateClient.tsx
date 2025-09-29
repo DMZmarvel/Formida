@@ -1,5 +1,5 @@
 import './CorporateClient.css';
-import guardian from '../../Images/companies/guardian.png';
+// import guardian from '../../Images/companies/guardian.png';
 import punch from '../../Images/companies/punch.png';
 import vanguard from '../../Images/companies/vanguard.png';
 import channels from '../../Images/companies/channels.png';
@@ -18,7 +18,7 @@ import { Pagination } from 'swiper/modules';
 
 const CorporateClient = () => {
   const logos = [
-    guardian,
+    // guardian,
     punch,
     vanguard,
     channels,
