@@ -12,11 +12,26 @@ import PrivateRoute from './PrivateRoute';
 import SubmitNotice from '@/pages/SubmitNotice';
 import CheckStatus from '@/pages/CheckStatus';
 import MyNotices from '@/pages/MyNotices';
-import AdminNotices from '@/pages/AdminNotices';
 import Dashboard from '@/pages/Dashboard';
 import PreviewNotice from '@/pages/PreviewNotice';
 import PayNotice from '@/pages/PayNotice';
 import Publications from '@/pages/Publications';
+
+import AdminLayout from '@/admin/layout/AdminLayout';
+import AdminGuard from '@/admin/AdminGuard';
+import AdminDashboard from '@/admin/pages/AdminDashboard';
+import Pricing from '@/admin/pages/Pricing';
+import Vendors from '@/admin/pages/Vendors';
+import AdminUsers from '@/admin/pages/AdminUsers';
+import AdminLogin from '@/admin/pages/AdminLogin';
+import AdminNotices from '@/admin/pages/AdminNotices';
+import VendorDetails from '@/admin/pages/VendorDetails';
+
+import VendorLogin from '@/vendor/VendorLogin';
+import VendorLayout from '@/vendor/VendorLayout';
+import VendorDashboard from '@/vendor/pages/VendorDashboard';
+import VendorNotices from '@/vendor/pages/VendorNotices';
+import VendorEarnings from '@/vendor/pages/VendorEarnings';
 
 import PrivacyPolicy from '../pages/PrivacyPolicy';
 import TermsConditions from '../pages/TermsConditions';
@@ -100,12 +115,6 @@ const routes = createBrowserRouter([
         path: '/my-notices',
         element: <MyNotices />,
       },
-
-      {
-        path: '/admin/notices',
-        element: <AdminNotices />,
-      },
-
       {
         path: '/dashboard',
         element: <Dashboard />,
@@ -120,11 +129,51 @@ const routes = createBrowserRouter([
       },
 
       {
+        path: '/admin/vendors/:id',
+        element: <VendorDetails />,
+      },
+
+      {
         path: '/publications',
         element: <Publications />,
       },
     ],
   },
+  {
+    path: '/admin/login',
+    element: <AdminLogin />,
+  },
+  {
+    path: '/admin',
+    element: (
+      <AdminGuard>
+        <AdminLayout />
+      </AdminGuard>
+    ),
+    children: [
+      { path: 'dashboard', element: <AdminDashboard /> },
+      { path: 'notices', element: <AdminNotices /> },
+      { path: 'pricing', element: <Pricing /> },
+      { path: 'vendors', element: <Vendors /> },
+
+      { path: 'admin-users', element: <AdminUsers /> },
+    ],
+  },
+
+  {
+    path: '/vendor/login',
+    element: <VendorLogin />,
+  },
+  {
+    path: '/vendor',
+    element: <VendorLayout />,
+    children: [
+      { path: 'dashboard', element: <VendorDashboard /> },
+      { path: 'notices', element: <VendorNotices /> },
+      { path: 'earnings', element: <VendorEarnings /> },
+    ],
+  },
+
   {
     path: '/login',
     element: <Login />,

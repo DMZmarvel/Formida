@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/Toast';
 
 type TabKey = 'Change of Name' | 'Lost Document' | 'Court Affidavit';
+type Rule = { type: string; newspaper?: string; amount: number };
 type Step = 1 | 2 | 3;
 
 const TABS: TabKey[] = ['Change of Name', 'Lost Document', 'Court Affidavit'];
@@ -41,6 +42,8 @@ type Errors = Record<string, string>;
 export default function SubmitNotice() {
   const navigate = useNavigate();
   const { addToast } = useToast();
+  const [rules, setRules] = React.useState<Rule[]>([]);
+  const [price, setPrice] = useState<number>(0);
 
   const [step, setStep] = useState<Step>(1);
   const [activeTab, setActiveTab] = useState<TabKey>('Change of Name');
@@ -56,11 +59,20 @@ export default function SubmitNotice() {
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [errors, setErrors] = useState<Errors>({});
 
-  const [price, setPrice] = useState<number>(
-    DEFAULT_PRICES[TYPE_SLUG['Change of Name']]
-  );
   const [submitting, setSubmitting] = useState(false);
   const [refId, setRefId] = useState<string>('');
+
+  React.useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get(`${API_BASE.replace(/\/+$/, '')}/pricing`);
+        setRules(res.data?.data ?? []);
+      } catch (e) {
+        // fallback if fetch fails (optional)
+        setRules([]);
+      }
+    })();
+  }, []);
 
   React.useEffect(() => {
     setPrice(DEFAULT_PRICES[TYPE_SLUG[activeTab]]);
@@ -133,6 +145,34 @@ export default function SubmitNotice() {
       setStep(3);
     }
   };
+
+  const computePrice = React.useCallback(
+    (typeSlug: string, newspaper?: string) => {
+      // exact match (type + newspaper)
+      if (newspaper) {
+        const hit = rules.find(
+          (r) => r.type === typeSlug && (r.newspaper || '') === newspaper
+        );
+        if (hit) return hit.amount;
+      }
+      // fallback match (type only)
+      const typeOnly = rules.find((r) => r.type === typeSlug && !r.newspaper);
+      if (typeOnly) return typeOnly.amount;
+
+      // final fallback: 0 (or any safe default)
+      return 0;
+    },
+    [rules]
+  );
+
+  React.useEffect(() => {
+    const type = TYPE_SLUG[activeTab];
+    if (type === 'change-of-name') {
+      setPrice(computePrice(type, changeOfName.newspaper || undefined));
+    } else {
+      setPrice(computePrice(type));
+    }
+  }, [activeTab, changeOfName.newspaper, computePrice]);
 
   const prevStep = () => setStep((s) => (s === 1 ? 1 : ((s - 1) as Step)));
 
@@ -323,9 +363,10 @@ export default function SubmitNotice() {
               </div>
               <div className="mt-4 flex items-center justify-between">
                 <div className="text-sm text-gray-600">
-                  Base price: ₦
-                  {DEFAULT_PRICES[TYPE_SLUG[activeTab]].toLocaleString()}
+                  Live price: ₦
+                  {computePrice(TYPE_SLUG[activeTab]).toLocaleString()}
                 </div>
+
                 <button
                   type="button"
                   onClick={nextStep}
@@ -508,8 +549,7 @@ export default function SubmitNotice() {
                       type="number"
                       className={`${inputClass} w-28 text-right`}
                       value={price}
-                      onBlur={() => setTouched((t) => ({ ...t, price: true }))}
-                      onChange={(e) => setPrice(Number(e.target.value || 0))}
+                      onChange={(e) => setPrice(Number(e.target.value || 0))} // or remove this line to lock price
                       min={0}
                     />
                     <span className="text-sm text-gray-500">NGN</span>

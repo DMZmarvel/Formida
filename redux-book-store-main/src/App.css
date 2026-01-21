@@ -40,3 +40,65 @@
 .read-the-docs {
   color: #888;
 }
+
+/* 🛑 HIDE NAVBAR, FOOTER, BUTTONS WHEN PRINTING */
+@media print {
+  nav,
+  header,
+  footer,
+  .navbar,
+  .menu,
+  .topbar,
+  .print-hide {
+    display: none !important;
+  }
+
+  /* Hide non-print UI inside the Preview card */
+  button,
+  a {
+    display: none !important;
+  }
+
+  /* Ensure full-width print */
+  body {
+    margin: 0;
+    padding: 0;
+    background: #ffffff !important;
+  }
+
+  /* The white card should fill the whole page */
+  .print\:shadow-none {
+    box-shadow: none !important;
+  }
+
+  .print\:border-0 {
+    border: none !important;
+  }
+}
+
+.print-stamp {
+  position: absolute;
+  top: 120px;
+  right: 120px;
+  opacity: 0.25;
+  width: 200px;
+  pointer-events: none;
+  z-index: 999;
+}
+
+@media screen {
+  .print-stamp {
+    display: none;
+  }
+}
+
+@media print {
+  .print-stamp {
+    display: block !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

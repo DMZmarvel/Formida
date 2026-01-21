@@ -1,0 +1,46 @@
+
+okey see i get youve forgotten so many things but I'll try to give you an update on what we are going to do next
+
+1, on the footer those pages under it have not been fully modified and designed we will do that later after we take care of 2,3,4
+2, the image i sheard above is the pdf printer assume a user wants to print the publication he or she made. so what i would want us to do here is 1,, i dont want the printer to also display the navbar along side with the publication 2.. there should be some kind of stamp that would be displayed with the publicaton to show that it was verified and also avoid forgery of publication.
+3. on the admin side we need to update the admin dashboard for it to be able to fix the price for publications because not every publication has thesame price for it. 
+4. integration of real payment
+5. this one is an idea someone gave me but i dont actually know how possible it can be. so someone said i should make the product prossible for local vendors who are also doing  change of name, curt avdavite etc.. register as will i say admistrators that will have a different under the formida application  but as individuals that can also do  change of name, curt avdavite etc.. for people they bring in and they'll get their percentage as adminstrators. It makes sense right 
+
+
+Change of Name
+Loss of Document
+Public Disclaimer
+Affidavit of Single Status
+Change of Address
+Company Public Notice
+
+
+Option B — Full admin user management
+
+Multiple admin accounts
+Roles: super admin, moderator, vendor admin
+Admins can create other admins
+Vendors will also use admin login
+Scalable for the futur
+
+
+{
+  "email": "owner@formida.app",
+  "password": "Formida2025!.ng"
+}
+
+{
+  "name": "Owner",
+  "email": "owner@formida.app",
+  "passwordHash": "$2b$12$NaJMkEX5qRjl1CeYW3T0puFultFLrh/OknHOf0MlBbd8kBxE8Xnwa",
+  "roles": ["super_admin"],
+  "vendorId": null,
+  "isActive": true
+}
+
+
+
+Email: vendor_email
+Password: VendorDefault123
+

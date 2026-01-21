@@ -94,7 +94,7 @@ export default function PreviewNotice() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
-      <div className="rounded-2xl border bg-white shadow-sm p-6 print:shadow-none print:border-0">
+      <div className="relative rounded-2xl border bg-white shadow-sm p-6 print:shadow-none print:border-0">
         <div className="flex flex-wrap items-center gap-2">
           <h1 className="text-2xl font-bold text-gray-900">Notice Preview</h1>
           <span className="rounded bg-gray-100 px-2 py-0.5 text-sm text-gray-800">
@@ -150,6 +150,15 @@ export default function PreviewNotice() {
 
         <div className="text-gray-800 leading-relaxed whitespace-pre-wrap">
           {notice.content}
+        </div>
+
+        {/* Dynamic Stamp */}
+        <div className="print-stamp">
+          {notice.paid && notice.status === 'approved' ? (
+            <img src="/stamp-verified.png" alt="Verified Stamp" />
+          ) : (
+            <img src="/stamp-unverified.png" alt="Unverified Stamp" />
+          )}
         </div>
 
         <hr className="my-4" />
