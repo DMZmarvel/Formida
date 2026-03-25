@@ -26,7 +26,7 @@ const CorporateClient = () => {
   return (
     <section
       style={{
-        background: '#EBE5C2',
+        background: '#000',
         padding: '80px 0',
         position: 'relative',
         overflow: 'hidden',
@@ -35,11 +35,11 @@ const CorporateClient = () => {
       <style>{`
         .fmd-corp-fade-l {
           position: absolute; left: 0; top: 0; bottom: 0; width: 120px; z-index: 2;
-          background: linear-gradient(to right, #EBE5C2, transparent); pointer-events: none;
+          background: linear-gradient(to right, #000, transparent); pointer-events: none;
         }
         .fmd-corp-fade-r {
           position: absolute; right: 0; top: 0; bottom: 0; width: 120px; z-index: 2;
-          background: linear-gradient(to left, #EBE5C2, transparent); pointer-events: none;
+          background: linear-gradient(to left, #000, transparent); pointer-events: none;
         }
         .fmd-corp-track {
           display: flex; gap: 16px; width: max-content;

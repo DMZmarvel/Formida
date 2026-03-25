@@ -51,7 +51,7 @@ const TAB_DESC: Record<TabKey, string> = {
 };
 
 const css = `
-  .fmd-sn-page { background: #F8F3D9; min-height: 100vh; padding: 40px 0 80px; }
+  .fmd-sn-page { background: #000; min-height: 100vh; padding: 40px 0 80px; }
   .fmd-sn-container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
   .fmd-sn-header {
     background: #fff; border: 1.5px solid #EBE5C2;

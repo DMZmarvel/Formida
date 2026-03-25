@@ -52,7 +52,7 @@ const STEPS = [
 const Facilities = () => {
   return (
     <section
-      style={{ background: '#fff', position: 'relative', overflow: 'hidden' }}
+      style={{ background: '#000', position: 'relative', overflow: 'hidden' }}
     >
       <style>{`
         .fmd-feat-card {

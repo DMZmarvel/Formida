@@ -36,7 +36,7 @@ const Strength = () => {
   return (
     <section
       style={{
-        background: '#F8F3D9',
+        background: '#000',
         position: 'relative',
         overflow: 'hidden',
         padding: '96px 0',

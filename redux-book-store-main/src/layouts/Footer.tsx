@@ -14,53 +14,73 @@ const Footer = () => {
   return (
     <footer
       style={{
-        background: '#504B38',
-        color: '#EBE5C2',
+        background: '#000',
+        color: '#B9B28A',
         position: 'relative',
         overflow: 'hidden',
       }}
     >
       <style>{`
+        .fmd-foot-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 64px 24px;
+          display: grid;
+          /* Desktop: 4 columns | Tablet: 2 columns | Mobile: 1 column */
+          grid-template-columns: 2fr 1fr 1fr 1.2fr;
+          gap: 40px;
+        }
+
         .fmd-foot-link {
           color: #B9B28A; font-size: 13.5px; text-decoration: none;
           transition: color .15s; display: inline-block;
         }
         .fmd-foot-link:hover { color: #F4991A; }
+
         .fmd-foot-social {
           width: 36px; height: 36px; border-radius: 9px;
           background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
           display: flex; align-items: center; justify-content: center;
-          color: #B9B28A; font-size: 14px; text-decoration: none;
-          transition: all .15s; flex-shrink: 0;
+          color: #B9B28A; font-size: 14px; text-decoration: none; transition: all .15s;
         }
-        .fmd-foot-social:hover {
-          background: rgba(244,153,26,.15);
-          border-color: rgba(244,153,26,.3);
-          color: #F4991A;
-        }
+        .fmd-foot-social:hover { background: rgba(244,153,26,.15); border-color: rgba(244,153,26,.3); color: #F4991A; }
+
+        .fmd-foot-newsletter-wrap { display: flex; gap: 8px; margin-top: 12px; }
         .fmd-foot-newsletter-input {
-          flex: 1; background: rgba(255,255,255,.07);
-          border: 1px solid rgba(255,255,255,.1);
-          border-radius: 9px; padding: 9px 14px;
-          font-size: 13px; color: #EBE5C2; outline: none;
-          transition: border-color .15s;
+          flex: 1; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+          border-radius: 9px; padding: 10px 14px; font-size: 13px; color: #EBE5C2; outline: none;
         }
-        .fmd-foot-newsletter-input::placeholder { color: rgba(235,229,194,.4); }
-        .fmd-foot-newsletter-input:focus { border-color: rgba(244,153,26,.5); }
         .fmd-foot-newsletter-btn {
-          background: #F4991A; color: #fff; border: none;
-          border-radius: 9px; padding: 9px 16px;
-          font-size: 13px; font-weight: 700; cursor: pointer;
-          display: flex; align-items: center; gap: 6px;
-          transition: background .2s; flex-shrink: 0;
-          white-space: nowrap;
+          background: #F4991A; color: #fff; border: none; border-radius: 9px;
+          padding: 0 16px; cursor: pointer; transition: background .2s;
         }
-        .fmd-foot-newsletter-btn:hover { background: #e08810; }
-        .fmd-foot-divider { height: 1px; background: rgba(255,255,255,.08); }
-        .fmd-foot-bottom { background: rgba(0,0,0,.2); }
+
+        .fmd-foot-bottom-wrap {
+          max-width: 1200px; margin: 0 auto; padding: 20px 24px;
+          display: flex; justify-content: space-between; align-items: center;
+          flex-wrap: wrap; gap: 16px;
+        }
+
+        /* RESPONSIVE BREAKPOINTS */
+        @media (max-width: 1024px) {
+          .fmd-foot-container { grid-template-columns: 1.5fr 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+          .fmd-foot-container { grid-template-columns: 1fr 1fr; gap: 32px; padding: 48px 24px; }
+          .fmd-brand-col { grid-column: span 2; } /* Brand takes full width on tablet */
+        }
+
+        @media (max-width: 480px) {
+          .fmd-foot-container { grid-template-columns: 1fr; text-align: center; }
+          .fmd-brand-col { grid-column: span 1; }
+          .fmd-brand-col p { margin: 0 auto 24px; }
+          .fmd-foot-social-row { justify-content: center; }
+          .fmd-foot-bottom-wrap { justify-content: center; text-align: center; }
+        }
       `}</style>
 
-      {/* Decorative top line */}
+      {/* The Gradient Border Bottom We Fixed Earlier */}
       <div
         style={{
           position: 'absolute',
@@ -70,268 +90,185 @@ const Footer = () => {
           height: 3,
           background:
             'linear-gradient(90deg, transparent, #F4991A, transparent)',
+          opacity: 0.5,
         }}
       />
 
-      {/* Main grid */}
-      <div
-        style={{ maxWidth: 1200, margin: '0 auto', padding: '64px 28px 48px' }}
-      >
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '2fr 1fr 1fr 1fr',
-            gap: 48,
-          }}
-        >
-          {/* Brand col */}
-          <div>
-            {/* Logo */}
+      <div className="fmd-foot-container">
+        {/* Brand Column */}
+        <div className="fmd-brand-col">
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              marginBottom: 16,
+              justifyContent: 'inherit',
+            }}
+          >
             <div
               style={{
+                width: 34,
+                height: 34,
+                background: '#F4991A',
+                borderRadius: 9,
                 display: 'flex',
                 alignItems: 'center',
-                gap: 10,
-                marginBottom: 20,
+                justifySelf: 'center',
+                justifyContent: 'center',
               }}
             >
-              <div
-                style={{
-                  width: 36,
-                  height: 36,
-                  background: '#F4991A',
-                  borderRadius: 10,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <FiFileText size={17} color="#fff" strokeWidth={2.5} />
-              </div>
-              <span
-                style={{
-                  fontFamily: "'Syne', sans-serif",
-                  fontSize: 19,
-                  fontWeight: 900,
-                  color: '#F8F3D9',
-                  letterSpacing: '-.4px',
-                }}
-              >
-                form<span style={{ color: '#F4991A' }}>ida</span>
-              </span>
+              <FiFileText size={16} color="#fff" />
             </div>
-
-            <p
+            <span
               style={{
-                color: '#B9B28A',
-                fontSize: 13.5,
-                lineHeight: 1.75,
-                maxWidth: 280,
-                marginBottom: 28,
-              }}
-            >
-              Nigeria's trusted platform for legal publications — change of
-              name, court affidavits, lost documents, and more. Fast, compliant,
-              and verified.
-            </p>
-
-            {/* Social icons */}
-            <div style={{ display: 'flex', gap: 10 }}>
-              <a href="#" className="fmd-foot-social" aria-label="Facebook">
-                <FaFacebookF />
-              </a>
-              <a href="#" className="fmd-foot-social" aria-label="Instagram">
-                <FaInstagram />
-              </a>
-              <a href="#" className="fmd-foot-social" aria-label="Twitter">
-                <FaTwitter />
-              </a>
-              <a href="#" className="fmd-foot-social" aria-label="LinkedIn">
-                <FaLinkedinIn />
-              </a>
-            </div>
-          </div>
-
-          {/* Navigate */}
-          <div>
-            <h3
-              style={{
-                fontFamily: "'Syne', sans-serif",
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
+                fontFamily: 'Syne',
+                fontSize: 20,
+                fontWeight: 900,
                 color: '#F8F3D9',
-                marginBottom: 20,
               }}
             >
-              Navigate
-            </h3>
-            <ul
-              style={{
-                listStyle: 'none',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 12,
-              }}
-            >
-              {[
-                { to: '/', label: 'Home' },
-                { to: '/notice', label: 'Submit Notice' },
-                { to: '/status', label: 'Check Status' },
-                { to: '/publications', label: 'Publications' },
-              ].map((l) => (
-                <li key={l.to}>
-                  <Link to={l.to} className="fmd-foot-link">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+              form<span style={{ color: '#F4991A' }}>ida</span>
+            </span>
           </div>
-
-          {/* Help */}
-          <div>
-            <h3
-              style={{
-                fontFamily: "'Syne', sans-serif",
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-                color: '#F8F3D9',
-                marginBottom: 20,
-              }}
-            >
-              Help
-            </h3>
-            <ul
-              style={{
-                listStyle: 'none',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 12,
-              }}
-            >
-              {[
-                { to: '/contact', label: 'Contact Us' },
-                { to: '/support', label: 'Support Centre' },
-                { to: '/faq', label: 'FAQs' },
-                { to: '/vendor/login', label: 'Vendor Portal' },
-              ].map((l) => (
-                <li key={l.to}>
-                  <Link to={l.to} className="fmd-foot-link">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <p
+            style={{
+              fontSize: 13.5,
+              lineHeight: 1.6,
+              maxWidth: 300,
+              marginBottom: 24,
+            }}
+          >
+            Nigeria's trusted platform for legal publications. Fast, compliant,
+            and verified services for all legal notices.
+          </p>
+          <div
+            className="fmd-foot-social-row"
+            style={{ display: 'flex', gap: 10 }}
+          >
+            <a href="#" className="fmd-foot-social">
+              <FaFacebookF />
+            </a>
+            <a href="#" className="fmd-foot-social">
+              <FaInstagram />
+            </a>
+            <a href="#" className="fmd-foot-social">
+              <FaTwitter />
+            </a>
+            <a href="#" className="fmd-foot-social">
+              <FaLinkedinIn />
+            </a>
           </div>
+        </div>
 
-          {/* Legal */}
-          <div>
-            <h3
-              style={{
-                fontFamily: "'Syne', sans-serif",
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-                color: '#F8F3D9',
-                marginBottom: 20,
-              }}
-            >
-              Legal
-            </h3>
-            <ul
-              style={{
-                listStyle: 'none',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 12,
-              }}
-            >
-              {[
-                { to: '/privacy-policy', label: 'Privacy Policy' },
-                { to: '/terms-conditions', label: 'Terms & Conditions' },
-              ].map((l) => (
-                <li key={l.to}>
-                  <Link to={l.to} className="fmd-foot-link">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        {/* Links Column */}
+        <div>
+          <h4
+            style={{
+              color: '#F8F3D9',
+              fontSize: 12,
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              marginBottom: 20,
+            }}
+          >
+            Navigate
+          </h4>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <Link to="/" className="fmd-foot-link">
+              Home
+            </Link>
+            <Link to="/notice" className="fmd-foot-link">
+              Submit Notice
+            </Link>
+            <Link to="/status" className="fmd-foot-link">
+              Check Status
+            </Link>
+            <Link to="/publications" className="fmd-foot-link">
+              Publications
+            </Link>
+          </div>
+        </div>
 
-            {/* Newsletter */}
-            <div style={{ marginTop: 32 }}>
-              <p
-                style={{
-                  fontFamily: "'Syne', sans-serif",
-                  fontSize: 12,
-                  fontWeight: 700,
-                  color: '#F8F3D9',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  marginBottom: 12,
-                }}
-              >
-                Stay Updated
-              </p>
-              <div style={{ display: 'flex', gap: 8 }}>
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="fmd-foot-newsletter-input"
-                />
-                <button className="fmd-foot-newsletter-btn">
-                  <FiArrowRight size={13} />
-                </button>
-              </div>
-            </div>
+        {/* Support Column */}
+        <div>
+          <h4
+            style={{
+              color: '#F8F3D9',
+              fontSize: 12,
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              marginBottom: 20,
+            }}
+          >
+            Support
+          </h4>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <Link to="/contact" className="fmd-foot-link">
+              Contact Us
+            </Link>
+            <Link to="/faq" className="fmd-foot-link">
+              FAQs
+            </Link>
+            <Link to="/vendor/login" className="fmd-foot-link">
+              Vendor Portal
+            </Link>
+          </div>
+        </div>
+
+        {/* Newsletter Column */}
+        <div>
+          <h4
+            style={{
+              color: '#F8F3D9',
+              fontSize: 12,
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              marginBottom: 20,
+            }}
+          >
+            Stay Updated
+          </h4>
+          <p style={{ fontSize: 12, marginBottom: 12 }}>
+            Get the latest legal updates.
+          </p>
+          <div className="fmd-foot-newsletter-wrap">
+            <input
+              type="email"
+              placeholder="Email address"
+              className="fmd-foot-newsletter-input"
+            />
+            <button className="fmd-foot-newsletter-btn">
+              <FiArrowRight />
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Divider */}
-      <div className="fmd-foot-divider" />
+      <div style={{ height: 1, background: 'rgba(255,255,255,.05)' }} />
 
-      {/* Bottom bar */}
-      <div className="fmd-foot-bottom" style={{ padding: '18px 28px' }}>
-        <div
-          style={{
-            maxWidth: 1200,
-            margin: '0 auto',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: 12,
-          }}
-        >
-          <span style={{ fontSize: 12.5, color: '#B9B28A' }}>
+      <div style={{ background: 'rgba(0,0,0,0.3)' }}>
+        <div className="fmd-foot-bottom-wrap">
+          <span style={{ fontSize: 12 }}>
             © {date.getFullYear()}{' '}
-            <span
-              style={{
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 800,
-                color: '#F8F3D9',
-              }}
-            >
+            <strong style={{ color: '#F8F3D9', fontFamily: 'Syne' }}>
               Formida
-            </span>
+            </strong>
             . All rights reserved.
           </span>
-          <div style={{ display: 'flex', gap: 20 }}>
+          <div style={{ display: 'flex', gap: 24 }}>
             <Link
-              to="/privacy-policy"
+              to="/privacy"
               className="fmd-foot-link"
               style={{ fontSize: 12 }}
             >
-              Privacy Policy
+              Privacy
             </Link>
             <Link
-              to="/terms-conditions"
+              to="/terms"
               className="fmd-foot-link"
               style={{ fontSize: 12 }}
             >

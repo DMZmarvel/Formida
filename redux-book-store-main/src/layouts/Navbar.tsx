@@ -23,13 +23,15 @@ const NAV_ITEMS: NavItem[] = [
 
 const css = `
   .fmd-nav { position: sticky; top: 0; z-index: 50; width: 100%; }
-  .fmd-inner {
-    background: #F8F3D9;
-    border-bottom: 1px solid #EBE5C2;
+ .fmd-inner {
+    background: #000;
+    border-bottom: 3px solid; 
+    border-image-source: linear-gradient(90deg, transparent, #F4991A, transparent);
+    border-image-slice: 1;
     transition: box-shadow .25s;
   }
   .fmd-inner.scrolled {
-    background: rgba(248,243,217,0.97);
+    background: #000;
     backdrop-filter: blur(12px);
     box-shadow: 0 2px 20px rgba(80,75,56,0.1);
   }
@@ -44,7 +46,7 @@ const css = `
     display: flex; align-items: center; justify-content: center;
   }
   .fmd-logo-text {
-    font-size: 19px; font-weight: 900; color: #504B38;
+    font-size: 19px; font-weight: 900; color: #EBE5C2;
     letter-spacing: -.5px; font-family: 'Syne', sans-serif;
   }
   .fmd-logo-text span { color: #F4991A; }

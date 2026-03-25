@@ -21,7 +21,7 @@ const Banner = () => {
   return (
     <section
       style={{
-        background: '#F8F3D9',
+        background: '#000',
         position: 'relative',
         overflow: 'hidden',
         minHeight: '100vh',

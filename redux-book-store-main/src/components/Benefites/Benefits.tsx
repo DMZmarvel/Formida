@@ -35,7 +35,7 @@ const Benefits = () => {
   return (
     <section
       style={{
-        background: '#fff',
+        background: '#000',
         padding: '96px 0',
         position: 'relative',
         overflow: 'hidden',

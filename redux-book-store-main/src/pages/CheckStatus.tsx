@@ -59,7 +59,7 @@ const STATUS_CONFIG = {
 
 const css = `
   .fmd-cs-page { background: #F8F3D9; min-height: 100vh; padding: 60px 0 100px; }
-  .fmd-cs-container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  .fmd-cs-container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
   .fmd-cs-header-card {
     background: #fff; border: 1.5px solid #EBE5C2; border-radius: 20px;
     padding: 36px 32px; margin-bottom: 24px;
